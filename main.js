@@ -10,10 +10,9 @@ global.TangoRequire = function(name)
 
 var App = TangoRequire('Core/App');
 
-
-
 var app = new App();
 app.addRoute('/', 'PictureCtrl@query', 'GET');
+app.addRoute('/picture/:id', 'PictureCtrl@find', 'GET');
 
 
 app.run();
