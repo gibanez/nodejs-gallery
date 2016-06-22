@@ -1,0 +1,18 @@
+body {
+    padding-top: 30px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+}
+
+.thumb {
+    margin-bottom: 0px;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.col-lg-1
+{
+    margin-left: 5px;
+    margin-right: -25px;
+    margin-bottom: -10px;
+}
