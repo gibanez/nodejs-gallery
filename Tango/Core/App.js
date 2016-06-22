@@ -6,7 +6,7 @@ var App = function (port) {
     self.routes = [];
     self.server = express();
     self.server.use(express.static('public'));
-    self.port = port || 8080;
+    self.port = port || 80;
     self.addRoute = function(uri, callback, method)
     {
         self.routes.push({uri:uri, callback:callback, method:method})
@@ -32,11 +32,13 @@ var App = function (port) {
 
         }, self);
 
+        /*
         self.server.get('*', function(req, res)
         {
             console.info(req.xhr);
             res.status(404).send('what???');
         });
+        */
 
 
         self.server.listen(self.port, function () {
@@ -44,4 +46,5 @@ var App = function (port) {
         })
     };
 };
+
 module.exports = App;
