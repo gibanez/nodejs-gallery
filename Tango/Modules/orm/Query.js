@@ -35,8 +35,6 @@ var Query = function(table)
         {
             sql += " WHERE " + self._where.join(" ");
         }
-
-        console.info(sql);
         return sql;
     }
 
