@@ -1,4 +1,5 @@
 var Controller = TangoRequire('Modules/mvc/Controller');
+var Users = AppRequire('Collection/Users');
 
 var PictureCtrl = function (req, res)
 {
@@ -11,8 +12,12 @@ var PictureCtrl = function (req, res)
 
     self.find = function(params)
     {
-        console.log(self.db);
-        self.response.send(params);
+
+        var users = new Users();
+        users.find(params.id).then(function(user)
+        {
+            self.response.send(user);
+        });
     }
 };
 
