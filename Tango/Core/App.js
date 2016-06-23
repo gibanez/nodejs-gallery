@@ -49,7 +49,7 @@ var App = function (port) {
                 console.info(e);
                 throw e;
             }
-            
+
             self.server[method](route.uri, function(req, res)
             {
                 self.watches.map(function(watch)
@@ -75,6 +75,10 @@ var App = function (port) {
         {
 
             console.log('INIT SERVER: localhost:' + self.port);
+            console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+            console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+            console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+            console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
         })
     };
 };

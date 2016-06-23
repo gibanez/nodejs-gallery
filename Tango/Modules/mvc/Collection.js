@@ -1,12 +1,12 @@
-var Query = TangoRequire('Modules/orm/Query');
-var Insert = TangoRequire('Modules/orm/Insert');
-var Update = TangoRequire('Modules/orm/Update');
+var ORM = TangoRequire('Modules/orm/ORM');
+var Query = ORM.Query;
+var Insert = ORM.Insert;
+var Update = ORM.Update;
 
 var Collection = function (table) {
     var self = this;
     self.db = myDB();
     self.table = table;
-
 
     var query = function(sql, bind)
     {
@@ -52,7 +52,8 @@ var Collection = function (table) {
 
     self.findAll = function(limit)
     {
-        var sql = 'SELECT * FROM ' + self.table;
+        //var sql = 'SELECT * FROM ' + self.table;
+        var sql = q.getSQL();
         return query(sql, []);
     };
     self.find = function(id)

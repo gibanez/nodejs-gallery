@@ -6,13 +6,25 @@ var UserCtrl = function (req, res)
     var self = Controller.call(this, req, res);
     self.find = function(params)
     {
-
-        console.info(params);
-
         var users = new Users();
         users.find(params.userId).then(function(user)
         {
-            self.response.send(user[0]);
+
+            user = user[0];
+
+            console.info(1)
+
+            user.get('albums').then(function(albums)
+            {
+                console.info(albums);
+
+                user.data.albums = albums.map(function(album){return album.data});
+
+                self.response.send(user.data);
+
+            });
+
+
         });
     }
 
