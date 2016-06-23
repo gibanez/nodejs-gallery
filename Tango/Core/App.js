@@ -27,10 +27,20 @@ var App = function (port) {
                 throw e;
             }
 
-            var objCtrl = new ClassCtrl();
-            self.server[method](route.uri, objCtrl[action]);
+            //console.info(DBConection);
+
+
+            self.server[method](route.uri, function(req, res)
+                {
+                    var objCtrl = new ClassCtrl(req, res);
+                    objCtrl[action](req.params);
+                }
+            );
 
         }, self);
+
+
+
 
         /*
         self.server.get('*', function(req, res)
@@ -41,7 +51,9 @@ var App = function (port) {
         */
 
 
-        self.server.listen(self.port, function () {
+        self.server.listen(self.port, function ()
+        {
+
             console.log('INIT SERVER: localhost:' + self.port);
         })
     };
