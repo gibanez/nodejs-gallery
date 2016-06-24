@@ -6,6 +6,6 @@ var ORM = {
     Query : Query,
     Insert : Insert,
     Update : Update
-}
+};
 
 module.exports = ORM;

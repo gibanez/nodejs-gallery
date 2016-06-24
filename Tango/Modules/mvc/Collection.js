@@ -8,29 +8,46 @@ var Collection = function (table) {
     self.db = myDB();
     self.table = table;
 
-    var query = function(sql, bind)
+    var query = function(sql, bind, plural)
     {
+
+        if(plural == undefined)
+        {
+            plural = true
+        }
+        //plural = plural || true;
+        log(sql);
+
+
         return new Promise(function(resolve, reject)
         {
             self.db.query(sql, bind, function(err, data)
             {
-               if(err)
+
+                if(err)
                {
                    return reject(err);
                }
 
                 if(data.OkPacket)
                 {
-                    return resolve(data.OkPacket);
+                    return resolve(data);
                 }
 
-                var models = [];
-                data.forEach(function(d)
-                {
-                    models.push(new self.model(d));
-                })
 
-                resolve(models);
+                if(plural)
+                {
+                    var models = [];
+                    data.forEach(function(d)
+                    {
+                        models.push(new self.model(d));
+                    });
+                    resolve(models);
+                }
+                else
+                {
+                    resolve(new self.model(data[0]));
+                }
             });
         });
     }
@@ -59,9 +76,16 @@ var Collection = function (table) {
     self.find = function(id)
     {
         var sql = q.where(self.id, '=', id).getSQL();
-        return query(sql, []);
+        return query(sql, [], false);
 
     };
+
+    self.findOne = function()
+    {
+        var sql = q.getSQL();
+        return query(sql, [], false);
+    };
+
     self.create = function(data)
     {
         return new self.model(data  || {});

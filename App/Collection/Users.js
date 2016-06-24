@@ -1,5 +1,5 @@
 var Collection = TangoRequire('Modules/mvc/Collection');
-var User = AppRequire('Model/User')
+var User = AppRequire('Model/User');
 var Users = function()
 {
     var self = Collection.call(this, 'users');
