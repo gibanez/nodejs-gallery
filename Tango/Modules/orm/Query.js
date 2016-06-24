@@ -11,7 +11,7 @@ var Query = function(table)
     self.table = table;
 
     var parseWhere = function (field, condition, value) {
-        return field + condition + value;
+        return field + condition + "'" + value + "'";
     };
 
     /**

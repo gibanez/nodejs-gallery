@@ -36,7 +36,8 @@ app.addRoute('/',               'PictureCtrl@query', 'GET');
 app.addRoute('/picture/:id',    'PictureCtrl@find', 'GET');
 app.addRoute('/picture',        'PictureCtrl@save', 'POST');
 
-app.addRoute('/user',          'UserCtrl@query', 'GET');
+app.addRoute('/auth/login',     'UserCtrl@login', 'POST');
+app.addRoute('/user',           'UserCtrl@query', 'GET');
 app.addRoute('/user/:userId',   'UserCtrl@find', 'GET');
 app.addRoute('/user',           'UserCtrl@save', 'POST');
 app.addRoute('/user/:userId',   'UserCtrl@update', 'PUT');

@@ -2,7 +2,7 @@ var Util = TangoRequire('Helpers/Util');
 var Model = function (data) {
     var self = this;
     self.data = data;
-    self.data.relation = {};
+    //self.data.relation = {};
     var relations = [];
 
     self.set = function(name, value)
@@ -15,12 +15,8 @@ var Model = function (data) {
 
         var dataRel = relations[name];
 
-
-        log(name);
-
         if(dataRel)
         {
-
             var Collection = AppRequire('Collection/' + dataRel.use);
             var key =dataRel.key;
             var collection = new Collection();

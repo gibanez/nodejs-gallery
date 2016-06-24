@@ -11,9 +11,6 @@ var UserCtrl = function (req, res)
     self.find = function(params)
     {
         var users = new Users();
-
-
-
         users.find(params.userId).then(function(user)
         {
             user.get('albums').then(function(albums)
@@ -68,6 +65,35 @@ var UserCtrl = function (req, res)
             users.persist(user).then(saved);
         };
         users.find(params.userId).then(afterFind);
+    };
+    self.login = function ()
+    {
+        var users = new Users();
+        users.getQuery().where('user_name', '=', self.request.body.user).and('password', '=', self.request.body.password);
+
+        users.findOne().then(function(user)
+        {
+            console.info(user);
+            if(user.data)
+            {
+
+                self.response.send({error:false, success:true, data:user.data});
+
+            }
+            else
+            {
+                self.response.status(401);
+                self.response.send({error:false, success:true, data:null});
+            }
+
+
+
+        }, function(data)
+        {
+            self.response.send(data);
+        });
+
+
     }
 };
 
