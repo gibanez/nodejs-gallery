@@ -1,6 +1,7 @@
 'use strict';
 var express = require('express');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var App = function (port) {
     var self = this;
@@ -11,6 +12,7 @@ var App = function (port) {
     self.server.use(bodyParser.urlencoded({     // to support URL-encoded bodies
         extended: true
     }));
+    self.server.use(session({secret:"node-gallery-test"}));
     self.server.use(express.static('public'));
     self.port = port || 80;
 
@@ -29,11 +31,10 @@ var App = function (port) {
         self.server.use(function (req, res, next)
         {
 
-
-
-
             next();
+
         });
+
 
 
         self.routes.forEach(function(route)

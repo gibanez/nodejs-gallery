@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AppLogin">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Thumbnail Gallery - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/login.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<div class="main-wrap" ng-controller="loginCtrl">
+    <form ng-submit="send()">
+    <div class="login-main">
+        <input type="text"      placeholder="Usuario / email" class="box1 border1" ng-model="user">
+        <input type="password"  placeholder="Contraseña" class="box1 border2" ng-model="password">
+        <input type="submit" class="send" value="Entrar">
+
+        <p style="color: #ffffff" ng-bind="message"></p>
+    </div>
+    </form>
+
+</div>
+<!-- /.container -->
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/libs/angular.min.js"></script>
+<script>
+    (function()
+    {
+
+        var App = angular.module('AppLogin', []);
+        var LoginCtrl = function($scope, $http, $window)
+        {
+            $scope.send = function () {
+
+                var res = $http.post('/auth/login', {user:$scope.user, password:$scope.password});
+                res.success(function(data, status, headers, config)
+                {
+
+                    console.info(data);
+                    if(data.success)
+                    {
+                        $scope.message = "Ingreso correcto";
+                        setTimeout(function()
+                        {
+                            $window.location.href = './';
+                        }, 700);
+
+                    }
+
+
+                });
+                res.error(function(data, status, headers, config) {
+                    //alert( "failure message: " + JSON.stringify({data: data}));
+                    $scope.message = data;
+                });
+
+            }
+        };
+        App.controller('loginCtrl', ['$scope', '$http', '$window', LoginCtrl]);
+
+    })();
+</script>
+
+</body>
+
+</html>

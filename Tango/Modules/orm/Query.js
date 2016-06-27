@@ -8,6 +8,8 @@ var Query = function(table)
     var self = this;
     self._where = [];
     self._joins = [];
+    self._limit = [];
+    self._orders = [];
     self.table = table;
 
     var parseWhere = function (field, condition, value) {
@@ -102,15 +104,12 @@ var Query = function(table)
 
         if(self._joins.length)
         {
-
-
             self._joins.forEach(function(dataJoin)
             {
 
                 sql += ' ' + dataJoin.type + ' JOIN ' + dataJoin.table + ' ON ' +  self.table + '.' + dataJoin.field1 + " " + dataJoin.condition + " " + dataJoin.table + "." + dataJoin.field3;
 
             });
-
         }
 
         if(self._where.length)
@@ -118,10 +117,41 @@ var Query = function(table)
             sql += " WHERE " + self._where.join(" ");
         }
 
+        if(self._orders.length)
+        {
+            sql += " ORDER BY " + self._orders.join(", ");
+        }
 
+        if(self._limit)
+        {
+            sql += self._limit;
+        }
 
         return sql;
-    }
+    };
+
+    self.limit = function(offset, init)
+    {
+        if(offset)
+        {
+            self._limit = " LIMIT " + offset;
+        }
+
+        if(offset && init)
+        {
+            self._limit = " LIMIT " + init + ", " + offset;
+        }
+
+        return self;
+    };
+
+    self.orderBy = function(field, order)
+    {
+        self._orders.push(field || '' + ' ' + order || '');
+    };
+
+
+
 };
 
 module.exports = Query;

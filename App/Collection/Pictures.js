@@ -4,7 +4,7 @@ var Pictures = function()
 {
     var self = Collection.call(this, 'pictures');
     self.model = Picture;
-    self.id = 'picture_id';
+    self.id = 'pictureId';
 };
 
 module.exports = Pictures;

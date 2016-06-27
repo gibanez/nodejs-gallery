@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AppGallery">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mis fotoss</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/thumbnail-gallery.css" rel="stylesheet">
+
+    <style>
+        .modal.modal-wide .modal-dialog {
+            width: 50%;
+        }
+        .modal-wide .modal-body {
+            overflow-y: auto;
+        }
+
+
+        h2,p{padding:5px}
+
+        #overlay4
+        {
+            display: none;
+            position:absolute;
+            top:50px;
+            left:0;
+            width: 100%;
+            z-index:1;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #overlay4 div
+        {
+            position: relative;
+            left: 50%;
+            margin-left:-150px;
+            border: 1px solid #666;
+            background-color: #000;
+            border-radius:5px;
+            color: #FFF;
+            width:300px;
+            z-index:3;
+            top:10px;
+        }
+
+        #overlay4 div.background
+        {
+            position: absolute;
+            width:100%;
+            height: 100%;
+            margin:auto;
+            background-color: #000;
+            opacity:0.8;
+            z-index:2;
+            top:0;
+            left:0;
+        }
+
+    </style>
+
+</head>
+
+<body ng-controller="pictureCtrl">
+
+<div id="overlay4">
+
+    <div>
+        <h2>Some awesome title</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia aliquid perspiciatis maxime sint deleniti. Modi odio odit accusamus quam debitis amet obcaecati unde dolores dignissimos doloribus. Consequatur mollitia repellendus ut!</p>
+    </div>
+    <div class="background"></div>
+</div>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Mis fotos</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">Buscar</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container-fluid" id="container">
+
+    <div class="row">
+<!--
+
+        <div class="col-lg-12">
+            <h1 class="page-header">Thumbnail Gallery</h1>
+        </div>
+-->
+
+        <hr/>
+
+        <div class="col-lg-2 col-md-4 col-xs-6 thumb" ng-repeat="picture in pictures">
+            <a class="thumbnail" ng-click="show($index)">
+                <img class="img-responsive" ng-src="/picture/thumb/{{picture.data.pictureId}}" alt="">
+            </a>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Your Website 2014</p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<!-- /.container -->
+
+
+<div class="modal fade modal-wide" tabindex="-1" role="dialog" id="picture-view">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="img-responsive" ng-src="/picture/show/{{id}}"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/libs/angular.min.js"></script>
+
+<script>
+    (function()
+    {
+
+        var App = angular.module('AppGallery', []);
+        var pictureCtrl = function($scope, $http, $window)
+        {
+            angular.element($window).bind("scroll", function(e) {
+                //console.log('scroll')
+                console.log($window.pageYOffset, Number($window.outerHeight), Number($('.navbar-fixed-top').height()));
+                $scope.visible = false;
+            })
+
+            $scope.pageNum = 1;
+            $scope.pictures = [];
+            var res = $http.get('/picture/random/' + $scope.pageNum);
+            res.success(function(data, status, headers, config)
+            {
+                $scope.pictures = data;
+                console.info(data);
+            });
+            res.error(function(data, status, headers, config) {
+                alert( "failure message: " + JSON.stringify({data: data}));
+
+            });
+
+
+            $scope.show = function (index)
+            {
+
+                console.info(index);
+                console.info($scope.pictures[index].data);
+
+
+
+                $scope.id = $scope.pictures[index].data.pictureId;
+
+                $('#picture-view').modal();
+            };
+
+
+        };
+        App.controller('pictureCtrl', ['$scope', '$http', '$window', pictureCtrl]);
+
+    })();
+</script>
+
+
+</body>
+
+</html>

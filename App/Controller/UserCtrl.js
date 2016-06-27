@@ -73,23 +73,24 @@ var UserCtrl = function (req, res)
 
         users.findOne().then(function(user)
         {
-            console.info(user);
             if(user.data)
             {
-
+                self.request.session.authUser = user.data;
+                //console.info(self.request.session);
                 self.response.send({error:false, success:true, data:user.data});
 
             }
             else
             {
                 self.response.status(401);
-                self.response.send({error:false, success:true, data:null});
+                self.response.send({error:false, success:true, data:user});
             }
 
 
 
         }, function(data)
         {
+            log(data);
             self.response.send(data);
         });
 

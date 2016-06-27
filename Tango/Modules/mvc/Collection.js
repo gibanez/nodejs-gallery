@@ -24,10 +24,19 @@ var Collection = function (table) {
             self.db.query(sql, bind, function(err, data)
             {
 
+
+
                 if(err)
                {
                    return reject(err);
                }
+
+                if(data.length == 0)
+                {
+                    return reject({msg:"not data"});
+                }
+
+                //log(data);
 
                 if(data.OkPacket)
                 {

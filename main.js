@@ -14,11 +14,12 @@ global.TangoRequire = function(name)
 {
     return require(__dirname + '/Tango/' + name);
 }
-
 global.myDB = function()
 {
     return db;
-}
+};
+global.ROOT = __dirname;
+
 
 var App = TangoRequire('Core/App');
 var mysql = TangoRequire('Modules/DB/MySQL');
@@ -32,9 +33,16 @@ app.watch('userId', function(req)
     return {a:1,b:2};
 })
 
-app.addRoute('/',               'PictureCtrl@query', 'GET');
-app.addRoute('/picture/:id',    'PictureCtrl@find', 'GET');
-app.addRoute('/picture',        'PictureCtrl@save', 'POST');
+app.addRoute('/',       'MainCtrl@index', 'GET');
+app.addRoute('/login',  'MainCtrl@login', 'GET');
+app.addRoute('/logout', 'MainCtrl@logout', 'GET');
+
+
+//PICTURES
+app.addRoute('/picture/random/:page',       'PictureCtrl@random', 'GET');
+app.addRoute('/picture/thumb/:id',          'PictureCtrl@thumb', 'GET');
+app.addRoute('/picture/show/:id',          'PictureCtrl@show', 'GET');
+app.addRoute('/picture',            'PictureCtrl@save', 'POST');
 
 app.addRoute('/auth/login',     'UserCtrl@login', 'POST');
 app.addRoute('/user',           'UserCtrl@query', 'GET');

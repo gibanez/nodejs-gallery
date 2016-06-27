@@ -14,7 +14,8 @@ var MySQL = {
                 host     : 'localhost',
                 user     : 'root',
                 password : '',
-                database : 'fotos'
+                database : 'fotos_admin',
+                supportBigNumbers: true
             });
             con.connect(function(error)
             {
