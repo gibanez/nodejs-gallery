@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AppAdmin">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mis fotoss</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+
+<body ng-controller="pictureCtrl">
+
+<header class="navbar navbar-default navbar-fixed-top navbar-inner">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand visible-xs" href="#">UI Bootstrap</a>
+        </div>
+        <nav class="hidden-xs">
+            <ul class="nav navbar-nav">
+                <a href="#top" role="button" class="navbar-brand">
+                    UI Bootstrap
+                </a>
+                <li class="dropdown" uib-dropdown="">
+                    <a role="button" class="dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+                        Directives <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#accordion">Accordion</a></li><li><a href="#alert">Alert</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#carousel">Carousel</a></li><li><a href="#collapse">Collapse</a></li><li><a href="#dateparser">Dateparser</a></li><li><a href="#datepicker">Datepicker</a></li><li><a href="#datepickerPopup">Datepicker Popup</a></li><li><a href="#dropdown">Dropdown</a></li><li><a href="#modal">Modal</a></li><li><a href="#pager">Pager</a></li><li><a href="#pagination">Pagination</a></li><li><a href="#popover">Popover</a></li><li><a href="#position">Position</a></li><li><a href="#progressbar">Progressbar</a></li><li><a href="#rating">Rating</a></li><li><a href="#tabs">Tabs</a></li><li><a href="#timepicker">Timepicker</a></li><li><a href="#tooltip">Tooltip</a></li><li><a href="#typeahead">Typeahead</a></li>
+                    </ul>
+                </li>
+                <li><a href="#getting_started">Getting started</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-touch.min.js"></script>
+<script src="js/angular-animate.min.js"></script>
+<script src="js/angular-route.min.js"></script>
+<script src="js/ui-bootstrap-tpls-1.3.3.min.js"></script>
+
+<script>
+    (function()
+    {
+
+        var App = angular.module('AppAdmin', ['ui.bootstrap']);
+        var pictureCtrl = function($scope, $http, $window)
+        {
+            angular.element($window).bind("scroll", function(e) {
+                //console.log('scroll')
+                console.log($window.pageYOffset, Number($window.outerHeight), Number($('.navbar-fixed-top').height()));
+                $scope.visible = false;
+            })
+
+            $scope.pageNum = 1;
+            $scope.pictures = [];
+            var res = $http.get('/picture/random/' + $scope.pageNum);
+            res.success(function(data, status, headers, config)
+            {
+                $scope.pictures = data;
+                console.info(data);
+            });
+            res.error(function(data, status, headers, config) {
+                alert( "failure message: " + JSON.stringify({data: data}));
+
+            });
+
+
+            $scope.show = function (index)
+            {
+
+                console.info(index);
+                console.info($scope.pictures[index].data);
+
+
+
+                $scope.id = $scope.pictures[index].data.pictureId;
+
+                $('#picture-view').modal();
+            };
+
+
+        };
+        App.controller('pictureCtrl', ['$scope', '$http', '$window', pictureCtrl]);
+
+    })();
+</script>
+
+
+</body>
+
+</html>
