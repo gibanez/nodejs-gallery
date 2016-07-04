@@ -1,7 +1,7 @@
 'use strict';
-var express = require('express');
-var bodyParser = require('body-parser');
-var session = require('express-session');
+var express     = require('express');
+var bodyParser  = require('body-parser');
+var session     = require('express-session');
 
 var App = function (port) {
     var self = this;
@@ -9,10 +9,9 @@ var App = function (port) {
     self.watches = [];
     self.server = express();
     self.server.use( bodyParser.json() );       // to support JSON-encoded bodies
-    self.server.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-        extended: true
-    }));
-    self.server.use(session({secret:"node-gallery-test"}));
+    // to support URL-encoded bodies
+    self.server.use(bodyParser.urlencoded({extended: true}));
+    self.server.use(session({secret:"node-gallery-test",saveUninitialized: true,resave: true}));
     self.server.use(express.static('public'));
     self.port = port || 80;
 
@@ -27,16 +26,10 @@ var App = function (port) {
     };
     self.run = function ()
     {
-
         self.server.use(function (req, res, next)
         {
-
-            next();
-
+           next();
         });
-
-
-
         self.routes.forEach(function(route)
         {
             var method = route.method.toLowerCase();

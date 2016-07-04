@@ -10,42 +10,84 @@
 
     <title>Mis fotoss</title>
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min2.css" rel="stylesheet">
+    <!--<link href="css/bootstrap-theme.min.css" rel="stylesheet">-->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/libs.min.css" rel="stylesheet">
+    <link href="css/admin.css" rel="stylesheet">
 </head>
 
-<body ng-controller="pictureCtrl">
+<body ng-controller="MainCtrl">
 
-<header class="navbar navbar-default navbar-fixed-top navbar-inner">
-    <div class="container">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3" ng-click="isCollapsed = !isCollapsed">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand visible-xs" href="#">UI Bootstrap</a>
+            <a class="navbar-brand" href="#">Brand</a>
         </div>
-        <nav class="hidden-xs">
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <a href="#top" role="button" class="navbar-brand">
-                    UI Bootstrap
-                </a>
-                <li class="dropdown" uib-dropdown="">
-                    <a role="button" class="dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
-                        Directives <b class="caret"></b>
-                    </a>
+                <li><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li  class="active"><a href="#"><span class="fa fa-camera"></span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-camera"></span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#accordion">Accordion</a></li><li><a href="#alert">Alert</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#carousel">Carousel</a></li><li><a href="#collapse">Collapse</a></li><li><a href="#dateparser">Dateparser</a></li><li><a href="#datepicker">Datepicker</a></li><li><a href="#datepickerPopup">Datepicker Popup</a></li><li><a href="#dropdown">Dropdown</a></li><li><a href="#modal">Modal</a></li><li><a href="#pager">Pager</a></li><li><a href="#pagination">Pagination</a></li><li><a href="#popover">Popover</a></li><li><a href="#position">Position</a></li><li><a href="#progressbar">Progressbar</a></li><li><a href="#rating">Rating</a></li><li><a href="#tabs">Tabs</a></li><li><a href="#timepicker">Timepicker</a></li><li><a href="#tooltip">Tooltip</a></li><li><a href="#typeahead">Typeahead</a></li>
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
                     </ul>
                 </li>
-                <li><a href="#getting_started">Getting started</a></li>
             </ul>
-        </nav>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- bsActivePane is optional -->
+            <div bs-active-pane="tabs.activeTab" bs-tabs>
+                <div ng-repeat="tab in tabs" data-title="{{ tab.title }}" name="{{ tab.name }}" disabled="{{ tab.disabled }}" bs-pane>
+                    <div ng-include="tab.tpl"></div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-</header>
+</div>
 
 <!-- jQuery -->
 <script src="js/jquery.min.js"></script>
@@ -55,51 +97,45 @@
 <script src="js/angular-touch.min.js"></script>
 <script src="js/angular-animate.min.js"></script>
 <script src="js/angular-route.min.js"></script>
-<script src="js/ui-bootstrap-tpls-1.3.3.min.js"></script>
+<script src="js/angular-strap.min.js"></script>
+<script src="js/angular-strap.tpl.min.js"></script>
 
 <script>
     (function()
     {
-
-        var App = angular.module('AppAdmin', ['ui.bootstrap']);
-        var pictureCtrl = function($scope, $http, $window)
+        var App = angular.module('AppAdmin', ['mgcrea.ngStrap', 'ngAnimate']);
+        var MainCtrl = function($scope)
         {
-            angular.element($window).bind("scroll", function(e) {
-                //console.log('scroll')
-                console.log($window.pageYOffset, Number($window.outerHeight), Number($('.navbar-fixed-top').height()));
-                $scope.visible = false;
-            })
 
-            $scope.pageNum = 1;
-            $scope.pictures = [];
-            var res = $http.get('/picture/random/' + $scope.pageNum);
-            res.success(function(data, status, headers, config)
+            $scope.tabs = [
+                {
+                    "title": "Home",
+                    name:1,
+                    "content": "Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica."
+                },
+                {
+                    "title": "Profile",
+                    name:2,
+                    "content": "Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. ",
+                    tpl:'app-admin/view/test.html'
+                },
+                {
+                    "title": "About",
+                    name:3,
+                    "content": "Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.",
+                    //"disabled": true
+                }
+            ];
+            $scope.tabs.activeTab = 0;
+
+            $scope.removeTab = function(index)
             {
-                $scope.pictures = data;
-                console.info(data);
-            });
-            res.error(function(data, status, headers, config) {
-                alert( "failure message: " + JSON.stringify({data: data}));
 
-            });
-
-
-            $scope.show = function (index)
-            {
-
-                console.info(index);
-                console.info($scope.pictures[index].data);
-
-
-
-                $scope.id = $scope.pictures[index].data.pictureId;
-
-                $('#picture-view').modal();
-            };
+            }
 
 
         };
-        App.controller('pictureCtrl', ['$scope', '$http', '$window', pictureCtrl]);
+        App.controller('MainCtrl', ['$scope', MainCtrl]);
 
     })();
 </script>

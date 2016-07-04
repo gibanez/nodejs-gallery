@@ -1,0 +1,30 @@
+<button type="button" class="btn btn-lg btn-primary" bs-aside="aside">Click to toggle aside
+    <br>
+    <small>(using an object)</small>
+</button>
+
+<label>Toggle:</label>
+<button type="button" class="btn btn-default" ng-model="button.toggle" bs-checkbox>Toggle</button>
+<!-- You can also use custom values with the `data-true-value` & `data-false-value` attributes -->
+
+<hr><label>Checkboxes:</label>
+<div class="btn-group" ng-model="button.checkbox" bs-checkbox-group>
+    <label class="btn btn-default"><input type="checkbox" value="left"> Left</label>
+    <label class="btn btn-default"><input type="checkbox" value="middle"> Middle</label>
+    <label class="btn btn-default"><input type="checkbox" value="right"> Right</label>
+    <!-- Children get compiled by `bs-checkbox-group` to :
+    <label class="btn btn-default"><input type="checkbox" value="left" ng-model="button.checkbox.left" bs-checkbox> Left</label>
+    ...
+    -->
+</div>
+
+<hr><label>Radios:</label>
+<div class="btn-group" ng-model="button.radio" bs-radio-group>
+    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="0"> First</label>
+    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="1"> Second</label>
+    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="2"> Third</label>
+    <!-- Children get compiled by `bs-radio-group` to :
+    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="left" ng-model="button.radio" bs-radio> Left</label>
+    ...
+    -->
+</div>
