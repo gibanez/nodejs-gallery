@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li  class="active"><a href="#"><span class="fa fa-camera"></span></a></li>
+                <li><a href="#" ng-click="addTab({name:'Fotos', tpl:'picture.html'})"><span class="fa fa-camera"></span></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-camera"></span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -99,6 +99,7 @@
 <script src="js/angular-route.min.js"></script>
 <script src="js/angular-strap.min.js"></script>
 <script src="js/angular-strap.tpl.min.js"></script>
+<script src="app-admin/controller/Controller.js"></script>
 
 <script>
     (function()
@@ -108,7 +109,7 @@
         {
 
             $scope.tabs = [
-                {
+                /*{
                     "title": "Home",
                     name:1,
                     "content": "Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica."
@@ -124,18 +125,28 @@
                     name:3,
                     "content": "Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.",
                     //"disabled": true
-                }
+                }*/
+
             ];
             $scope.tabs.activeTab = 0;
 
             $scope.removeTab = function(index)
             {
 
+            };
+            $scope.addTab = function (tab)
+            {
+                $scope.tabs.push({
+                    title:tab.name,
+                    name:$scope.tabs.length+1,
+                    tpl:'app-admin/view/' + tab.tpl
+                });
             }
 
 
         };
         App.controller('MainCtrl', ['$scope', MainCtrl]);
+        App.controller('PictureCtrl', ['$scope', PictureCtrl]);
 
     })();
 </script>
